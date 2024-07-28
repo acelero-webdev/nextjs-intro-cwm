@@ -2,5 +2,11 @@
 import React from 'react';
 
 export default function AddToCart() {
-    return <button onClick={() => console.log('running')}>Add to Cart</button>;
+    return (
+        <button
+            className='btn btn-primary'
+            onClick={() => console.log('running')}>
+            Add to Cart
+        </button>
+    );
 }
