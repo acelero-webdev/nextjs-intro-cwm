@@ -1,5 +1,6 @@
 import React from 'react';
 import UsersTable from './UsersTable';
+import Link from 'next/link';
 
 interface UserPageProps {
     searchParams: {
@@ -14,6 +15,11 @@ export default function UserPage({
     return (
         <>
             <h1>Users</h1>
+            <Link
+                href='/users/new'
+                className='btn'>
+                New User
+            </Link>
             <UsersTable
                 sortOption={sortOption}
                 sortOrder={sortOrder}
