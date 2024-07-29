@@ -1,6 +1,7 @@
 import React from 'react';
 import { sort } from 'fast-sort';
 import Link from 'next/link';
+import { FaSortAlphaDown, FaSortAlphaUpAlt } from 'react-icons/fa';
 
 interface User {
     id: number;
@@ -49,13 +50,27 @@ export default async function UsersTable({
             <thead>
                 <tr>
                     <th>
-                        <Link href='?sortOption=name&sortOrder=asc'>Name</Link>
+                        <div className='flex gap-4 items-center'>
+                            Name
+                            <Link href='?sortOption=name&sortOrder=asc'>
+                                <FaSortAlphaDown />
+                            </Link>
+                            <Link href='?sortOption=name&sortOrder=desc'>
+                                <FaSortAlphaUpAlt />
+                            </Link>
+                        </div>
                     </th>
 
                     <th>
-                        <Link href='?sortOption=email&sortOrder=asc'>
+                        <div className='flex gap-4 items-center'>
                             Email
-                        </Link>
+                            <Link href='?sortOption=email&sortOrder=asc'>
+                                <FaSortAlphaDown />
+                            </Link>
+                            <Link href='?sortOption=email&sortOrder=desc'>
+                                <FaSortAlphaUpAlt />
+                            </Link>
+                        </div>
                     </th>
                 </tr>
             </thead>
