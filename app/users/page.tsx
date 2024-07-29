@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import UsersTable from './UsersTable';
 import Link from 'next/link';
 
@@ -20,10 +20,12 @@ export default function UserPage({
                 className='btn'>
                 New User
             </Link>
-            <UsersTable
-                sortOption={sortOption}
-                sortOrder={sortOrder}
-            />
+            <Suspense fallback={<p>Loading...</p>}>
+                <UsersTable
+                    sortOption={sortOption}
+                    sortOrder={sortOrder}
+                />
+            </Suspense>
         </>
     );
 }
