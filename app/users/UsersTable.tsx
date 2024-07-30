@@ -78,7 +78,8 @@ export default async function UsersTable({
                 {sortUsers(sortOption, sortOrder, users).map((user) => (
                     <tr
                         key={user.id}
-                        className='hover:bg-sky-200 hover:cursor-pointer'>
+                        className='hover:bg-sky-200 hover:cursor-pointer'
+                    >
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                     </tr>
