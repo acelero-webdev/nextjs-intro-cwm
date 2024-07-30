@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import schema from '../schema';
+import productSchema from '../schema';
 
 interface Props {
     params: {
@@ -8,43 +8,39 @@ interface Props {
 }
 
 export function GET(request: NextRequest, { params: { id } }: Props) {
-    // Fetch data from db.
-    // If data is not found -> return 404
     if (id < 0 || id > 10) {
         return NextResponse.json(
             {
-                error: 'User Not Found',
+                error: 'Product not found.',
             },
-            { status: 404 }
+            {
+                status: 404,
+            }
         );
     }
 
-    // Else return data
     return NextResponse.json({
         id: 1,
-        name: 'Shane',
+        name: 'Milk',
+        price: 3.5,
     });
 }
 
 export async function PUT(request: NextRequest, { params: { id } }: Props) {
-    // Validate the request body
+    // Validate the body
     const body = await request.json();
 
-    const validation = schema.safeParse(body);
-
-    // If invalid -> return 400 error
-    if (!validation.success) {
+    const validation = productSchema.safeParse(body);
+    if (!validation.success)
         return NextResponse.json(validation.error.errors, {
             status: 400,
         });
-    }
 
-    // Check to see if users exists
-    // If invalid -> return 404 error
+    // Validate the id
     if (id < 0 || id > 10) {
         return NextResponse.json(
             {
-                error: 'User not found.',
+                error: 'Product not found.',
             },
             {
                 status: 404,
@@ -52,20 +48,20 @@ export async function PUT(request: NextRequest, { params: { id } }: Props) {
         );
     }
 
-    // Update the database
+    // Return response
     return NextResponse.json({
-        id: id,
-        body: body.name,
+        id,
+        name: body.name,
+        price: body.price,
     });
 }
 
 export async function DELETE(request: NextRequest, { params: { id } }: Props) {
-    // Fetch users
-    // Check to see if the user exists.
+    // Validate the id
     if (id < 0 || id > 10) {
         return NextResponse.json(
             {
-                error: 'User not found.',
+                error: 'Product not found.',
             },
             {
                 status: 404,
@@ -73,7 +69,8 @@ export async function DELETE(request: NextRequest, { params: { id } }: Props) {
         );
     }
 
-    // Delete the users
-    // Return 200 response
+    // Delete user in db
+
+    // Send response
     return NextResponse.json({});
 }

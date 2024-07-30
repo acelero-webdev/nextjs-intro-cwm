@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import schema from './schema';
 
 export function GET(request: NextRequest) {
     // Fetch users in db.
@@ -14,16 +15,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Validate the body
+    const validation = schema.safeParse(body);
+
     // If invalid -> 404
-    if (!body.name) {
-        return NextResponse.json(
-            {
-                error: 'Name is required.',
-            },
-            {
-                status: 404,
-            }
-        );
+    if (!validation.success) {
+        return NextResponse.json(validation.error.errors, {
+            status: 404,
+        });
     }
 
     // Else
