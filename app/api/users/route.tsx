@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import schema from './schema';
+import prisma from '@/prisma/client';
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
     // Fetch users in db.
+    const users = await prisma.user.findMany();
 
     // Return data
-    return NextResponse.json([
-        { id: 1, name: 'Shane' },
-        { id: 2, name: 'Mosh' },
-    ]);
+    return NextResponse.json(users);
 }
 
 export async function POST(request: NextRequest) {
@@ -24,14 +23,34 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    // Else
-    return NextResponse.json(
-        {
-            id: 3,
-            name: body.name,
+    const user = await prisma.user.findUnique({
+        where: {
+            email: body.email,
         },
-        {
-            status: 201,
-        }
-    );
+    });
+
+    // Ensure the user doesn't already exist.
+    if (user) {
+        return NextResponse.json(
+            {
+                error: 'A user with this email already exists',
+            },
+            {
+                status: 400,
+            }
+        );
+    }
+
+    // Create the new user
+    const newUser = await prisma.user.create({
+        data: {
+            name: body.name,
+            email: body.email,
+        },
+    });
+
+    // Send the new user back to the client
+    return NextResponse.json(newUser, {
+        status: 201,
+    });
 }
