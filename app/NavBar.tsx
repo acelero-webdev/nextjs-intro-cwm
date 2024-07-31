@@ -28,7 +28,12 @@ export default function NavBar() {
             <div className='flex gap-6 mr-3'>
                 <Link href='/users'>Users</Link>
                 <Link href='/admin'>Admin</Link>
-                {status === 'authenticated' && <div>{session.user!.name}</div>}
+                {status === 'authenticated' && (
+                    <div className='flex gap-6'>
+                        <p>{session.user!.name}</p>
+                        <Link href='/api/auth/signout'>Logout</Link>
+                    </div>
+                )}
                 {status === 'unauthenticated' && (
                     <Link href='/api/auth/signin'>Login</Link>
                 )}
