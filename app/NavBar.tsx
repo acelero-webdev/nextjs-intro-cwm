@@ -1,9 +1,16 @@
+'use client';
+
 import React from 'react';
 import Vercel from '@/public/vercel.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function NavBar() {
+    const { status, data: session } = useSession();
+
+    if (status === 'loading') return null;
+
     return (
         <nav className='navbar gap-4 bg-slate-200 p-5'>
             <div className='flex-1'>
@@ -18,8 +25,14 @@ export default function NavBar() {
                     />
                 </Link>
             </div>
-            <Link href='/users'>Users</Link>
-            <Link href='/admin'>Admin</Link>
+            <div className='flex gap-6 mr-3'>
+                <Link href='/users'>Users</Link>
+                <Link href='/admin'>Admin</Link>
+                {status === 'authenticated' && <div>{session.user!.name}</div>}
+                {status === 'unauthenticated' && (
+                    <Link href='/api/auth/signin'>Login</Link>
+                )}
+            </div>
         </nav>
     );
 }
