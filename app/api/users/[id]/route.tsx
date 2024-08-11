@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params: { id } }: Props) {
     // Find the user with the given id.
     const user = await prisma.user.findUnique({
         where: {
-            id: parseInt(id),
+            id,
         },
     });
 
@@ -47,7 +47,7 @@ export async function PUT(request: NextRequest, { params: { id } }: Props) {
     // If invalid -> return 404 error
     const user = await prisma.user.findUnique({
         where: {
-            id: parseInt(id),
+            id,
         },
     });
 
@@ -80,7 +80,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: Props) {
     // Check to see if the user exists.
     const user = await prisma.user.findUnique({
         where: {
-            id: parseInt(id),
+            id,
         },
     });
 

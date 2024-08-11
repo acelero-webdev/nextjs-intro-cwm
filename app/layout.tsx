@@ -1,10 +1,11 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Anybody } from 'next/font/google';
 import NavBar from './NavBar';
 import AuthProvider from './auth/Provider';
 
 const inter = Inter({ subsets: ['latin'] });
+const anybody = Anybody({ subsets: ['latin'], weight: ['400', '500'] });
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -20,7 +21,7 @@ export default function RootLayout({
         <html
             lang='en'
             data-theme='winter'>
-            <body className={inter.className}>
+            <body className={anybody.className}>
                 <AuthProvider>
                     <NavBar />
                     <main className='p-5'>{children}</main>
